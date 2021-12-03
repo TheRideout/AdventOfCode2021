@@ -1,8 +1,6 @@
 def load_input(path):
-    f = open(path)
-    directions = [line_parse(x) for x in f.readlines()]
-    f.close()
-    return directions
+    with open(path) as f:
+        return [line_parse(x) for x in f.readlines()]
 
 
 def line_parse(line):
@@ -11,8 +9,7 @@ def line_parse(line):
 
 
 def basic_navigation(data):
-    x = 0
-    y = 0
+    x = y = 0
     for k, v in data:
         if k == 'f':
             x += v
@@ -24,9 +21,7 @@ def basic_navigation(data):
 
 
 def aim_navigation(data):
-    aim = 0
-    x = 0
-    y = 0
+    x = y = aim = 0
     for k, v in data:
         if k == 'f':
             x += v
@@ -38,12 +33,15 @@ def aim_navigation(data):
     return x, y
 
 
-data = load_input('Input')
+def main():
+    data = load_input('Input')
 
-# Part 1
-x, y = basic_navigation(data)
-print(x * y)
+    x, y = basic_navigation(data)
+    xa, ya = aim_navigation(data)
 
-# Part 2
-xa, ya = aim_navigation(data)
-print(xa * ya)
+    print('Part 1: {v}'.format(v=x * y))
+    print('Part 2: {v}'.format(v=xa * ya))
+
+
+if __name__ == '__main__':
+    main()

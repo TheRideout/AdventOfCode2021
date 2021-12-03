@@ -1,11 +1,9 @@
 def load_input(path):
-    f = open(path)
-    numbers = [int(x) for x in f.readlines()]
-    f.close()
-    return numbers
+    with open(path) as f:
+        return [int(x) for x in f.readlines()]
 
 
-def find_increases(numbers):
+def find_slopes(numbers):
     return [determine_change(x, numbers[i-1]) if i > 0 else None for i, x in enumerate(numbers)]
 
 
@@ -21,13 +19,15 @@ def get_windowed_sums(numbers, window):
     return sums
 
 
-puzzle_input = load_input('Input')
+def main():
+    puzzle_input = load_input('Input')
 
-#Part 1
-increases = find_increases(puzzle_input)
-print(increases.count(1))
+    slopes = find_slopes(puzzle_input)
+    windowed_slopes = find_slopes(get_windowed_sums(puzzle_input, 3))
 
-#Part 2
-sums = get_windowed_sums(puzzle_input, 3)
-sum_increases = find_increases(sums)
-print(sum_increases.count(1))
+    print('Part 1: {v}'.format(v=slopes.count(1)))
+    print('Part 2: {v}'.format(v=windowed_slopes.count(1)))
+
+
+if __name__ == '__main__':
+    main()
