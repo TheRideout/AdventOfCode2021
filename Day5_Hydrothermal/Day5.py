@@ -13,8 +13,8 @@ class Vent:
         x2 = self.end[0]
         y1 = self.start[1]
         y2 = self.end[1]
-        xrange = range(x1, x2 + 1) if x1 < x2 else range(x1, x2 - 1, -1)
-        yrange = range(y1, y2 + 1) if y1 < y2 else range(y1, y2 - 1, -1)
+        xrange = range(min(x1, x2), max(x1, x2) + 1)
+        yrange = range(min(y1, y2), max(y1, y2) + 1)
         if x1 == x2:
             return [(x1, y) for y in yrange]
         if y1 == y2:
@@ -30,8 +30,8 @@ def load_input(path):
         return [vent_from_string(x) for x in f.readlines()]
 
 
-def vent_from_string(input):
-    points = [tuple(map(int, point.split(','))) for point in input.strip().split(' -> ')]
+def vent_from_string(string):
+    points = [tuple(map(int, point.split(','))) for point in string.strip().split(' -> ')]
     return Vent(points[0], points[1])
 
 
